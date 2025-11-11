@@ -1,0 +1,354 @@
+<?xml version='1.0'?>
+<robot name='mobile' xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <!-- ################### BASE STRUCTURE ################### -->
+  <link name="mobile/base_footprint"/>
+
+  <joint name="base_link_joint" type="fixed">
+    <origin xyz="0.0 0 0" rpy="0 0 0"/>
+    <parent link="mobile/base_footprint"/>
+    <child link="mobile_base_link"/>
+  </joint>
+
+  <link name="mobile_base_link">
+    <visual>
+      <origin xyz="0 0 0.1" rpy="0 0 1.57"/>
+      <geometry>
+        <box size="0.2 0.3 0.1"/>  <!-- Original dimensions preserved -->
+      </geometry>
+      <material name="blue">
+        <color rgba="0 0 1 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0.1" rpy="0 0 1.57"/>
+      <geometry>
+        <box size="0.2 0.3 0.1"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="5.52"/>
+      <inertia
+        ixx="0.0458" ixy="0" ixz="0"
+        iyy="0.0229" iyz="0"
+        izz="0.0595"/>
+    </inertial>
+  </link>
+
+  <!-- ################### WHEELS (ORIGINAL STRUCTURE PRESERVED) ################### -->
+  <!-- Front Right Wheel -->
+  <link name="wheel_1">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <cylinder length="0.04" radius="0.05"/>
+      </geometry>
+      <material name="blue">
+        <color rgba="0 0 1 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <cylinder length="0.05" radius="0.05"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="0.2"/>
+      <inertia
+        ixx="0.0002" ixy="0" ixz="0"
+        iyy="0.00015" iyz="0"
+        izz="0.0002"/>
+    </inertial>
+  </link>
+  <joint name="base_to_wheel1" type="continuous">
+    <parent link="mobile_base_link"/>
+    <child link="wheel_1"/>
+    <origin xyz="0.125 0.125 0.06" rpy="0 1.57 1.57"/>
+    <axis xyz="0 0 1"/>
+  </joint>
+
+  <!-- Wheel 2 -->
+  <link name="wheel_2">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <cylinder length="0.04" radius="0.05"/>
+      </geometry>
+      <material name="blue">
+        <color rgba="0 0 1 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <cylinder length="0.05" radius="0.05"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="0.2"/>
+      <inertia ixx="0.0002" ixy="0" ixz="0" iyy="0.00015" iyz="0" izz="0.0002"/>
+    </inertial>
+  </link>
+  <joint name="base_to_wheel2" type="continuous">
+    <parent link="mobile_base_link"/>
+    <child link="wheel_2"/>
+    <origin xyz="-0.125 0.125 0.06" rpy="0 1.57 1.57"/>
+    <axis xyz="0 0 1"/>
+  </joint>
+
+  <!-- Rear Right Wheel -->
+  <!-- Wheel 3 -->
+  <link name="wheel_3">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <cylinder length="0.04" radius="0.05"/>
+      </geometry>
+      <material name="blue">
+        <color rgba="0 0 1 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <cylinder length="0.05" radius="0.05"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="0.2"/>
+      <inertia ixx="0.0002" ixy="0" ixz="0" iyy="0.00015" iyz="0" izz="0.0002"/>
+    </inertial>
+  </link>
+  <joint name="base_to_wheel3" type="continuous">
+    <parent link="mobile_base_link"/>
+    <child link="wheel_3"/>
+    <origin xyz="0.125 -0.125 0.06" rpy="0 1.57 1.57"/>
+    <axis xyz="0 0 1"/>
+  </joint>
+
+<!-- Wheel 4 -->
+  <link name="wheel_4">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <cylinder length="0.04" radius="0.05"/>
+      </geometry>
+      <material name="blue">
+        <color rgba="0 0 1 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <cylinder length="0.05" radius="0.05"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="0.2"/>
+      <inertia ixx="0.0002" ixy="0" ixz="0" iyy="0.00015" iyz="0" izz="0.0002"/>
+    </inertial>
+  </link>
+  <joint name="base_to_wheel4" type="continuous">
+    <parent link="mobile_base_link"/>
+    <child link="wheel_4"/>
+    <origin xyz="-0.125 -0.125 0.06" rpy="0 1.57 1.57"/>
+    <axis xyz="0 0 1"/>
+  </joint>
+
+  <!-- ################### LIDAR MOUNTING SYSTEM ################### -->
+  <!-- Mounting Rod -->
+  <link name="lidar_mount">
+    <visual>
+      <origin xyz="0 0 0.075" rpy="0 0 0"/>
+      <geometry>
+        <cylinder length="0.15" radius="0.01"/>
+      </geometry>
+      <material name="silver">
+        <color rgba="0.8 0.8 0.8 1"/>
+      </material>
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder length="0.15" radius="0.01"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="0.1"/>
+      <inertia ixx="0.0001" ixy="0" ixz="0" iyy="0.0001" iyz="0" izz="0.0001"/>
+    </inertial>
+  </link>
+
+  <joint name="mount_joint" type="fixed">
+    <parent link="mobile_base_link"/>
+    <child link="lidar_mount"/>
+    <origin xyz="0 0 0.175"/>  <!-- Mounting position above base -->
+  </joint>
+
+  <!-- LIDAR Sensor -->
+  <link name="mobile_lidar_link">
+    <visual>
+      <origin xyz="0 0 0.025" rpy="0 0 0"/>
+      <geometry>
+        <cylinder length="0.05" radius="0.03"/>
+      </geometry>
+      <material name="red">
+        <color rgba="1 0 0 1"/>
+      </material>
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder length="0.05" radius="0.03"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="0.05"/>
+      <inertia ixx="0.0001" ixy="0" ixz="0" iyy="0.0001" iyz="0" izz="0.0001"/>
+    </inertial>
+  </link>
+
+  <joint name="lidar_joint" type="fixed">
+    <parent link="mobile_base_link"/>
+    <child link="mobile_lidar_link"/>
+    <origin xyz="0.1 0 0.05" rpy="0 0 0"/>  <!-- Center of mounting rod -->
+    <axis xyz="0 0 1"/>       <!-- Rotate around Z-axis-->
+  </joint>
+
+  <!-- ################### GAZEBO INTEGRATION ################### -->
+  <gazebo reference="mobile_base_link">
+    <material>Gazebo/Red</material>
+  </gazebo>
+
+  <!-- Wheel materials -->
+  <gazebo reference="wheel_1"><material>Gazebo/Green</material></gazebo>
+  <gazebo reference="wheel_2"><material>Gazebo/Green</material></gazebo>
+  <gazebo reference="wheel_3"><material>Gazebo/Green</material></gazebo>
+  <gazebo reference="wheel_4"><material>Gazebo/Green</material></gazebo>
+
+  <!-- Corrected Mecanum Drive Plugin -->
+  <gazebo>
+    <plugin name="mecanum_drive" filename="libgazebo_ros_planar_move.so">
+      <ros>
+          <namespace>/mobile</namespace>  <!-- Add this -->
+          <node_name>mecanum_drive_node</node_name>  <!-- Unique node name -->
+      </ros>
+      <commandTopic>cmd_vel</commandTopic>
+      <command_timeout>0.5</command_timeout>
+      <odometryTopic>odom</odometryTopic>
+      <odometryFrame>mobile/odom</odometryFrame>
+      <robotBaseFrame>mobile/base_footprint</robotBaseFrame>
+      <publishWheelTF>true</publishWheelTF>
+      <publishWheelJointState>true</publishWheelJointState>
+      <frontLeftJoint>base_to_wheel1</frontLeftJoint>
+      <frontRightJoint>base_to_wheel2</frontRightJoint>
+      <rearLeftJoint>base_to_wheel3</rearLeftJoint>
+      <rearRightJoint>base_to_wheel4</rearRightJoint>
+      <wheelSeparation>0.25</wheelSeparation>
+      <wheelDiameter>0.1</wheelDiameter>  <!-- 2*radius (0.05m) -->
+      <wheelTorque>2</wheelTorque>
+    </plugin>
+  </gazebo>
+
+  <!-- LIDAR Sensor Plugin -->
+  <gazebo reference="mobile_lidar_link">
+    <sensor name="mobile_lidar_sensor" type="ray">
+      <pose>0 0 0.025 0 0 0</pose>
+      <visualize>true</visualize>
+      <update_rate>10</update_rate>
+      <ray>
+        <scan>
+          <horizontal>
+            <samples>360</samples>
+            <resolution>1</resolution>
+            <min_angle>-3.14159</min_angle>
+            <max_angle>3.14159</max_angle>
+          </horizontal>
+        </scan>
+        <range>
+          <min>0.12</min>
+          <max>3.5</max>
+          <resolution>0.01</resolution>
+        </range>
+      </ray>
+      <plugin name="mobile_lidar_controller" filename="libgazebo_ros_ray_sensor.so">
+        <ros>
+          <namespace>/mobile</namespace>
+          <remapping>~/out:=scan</remapping>
+        </ros>
+        <output_type>sensor_msgs/LaserScan</output_type>
+        <frame_name>mobile_lidar_link</frame_name>
+      </plugin>
+    </sensor>
+  </gazebo>
+  
+  
+  <gazebo>
+    <plugin name="lidar_rotation" filename="libgazebo_ros_joint_state_publisher.so">
+      <ros>
+        <namespace>/mobile</namespace>  <!-- Unique namespace -->
+      </ros>
+
+      <joint_name>lidar_joint</joint_name>
+      <update_rate>10</update_rate>
+      <velocity>3.14159</velocity>  <!-- Rotate at ~1 rev/sec (2π rad/s) -->
+    </plugin>
+  </gazebo>
+
+  <!-- Transmissions (Original Preserved) -->
+  <transmission name="tran1">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="base_to_wheel1">
+      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor1">
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+  <!-- Other transmissions similarly -->
+  
+    <transmission name="tran2">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="base_to_wheel2">
+      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor2">
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+  
+    <transmission name="tran3">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="base_to_wheel3">
+      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor3">
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+  
+    <transmission name="tran4">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="base_to_wheel4">
+      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="motor4">
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+  </transmission>
+  
+  <gazebo>
+    <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+      <ros>
+        <namespace>/mobile</namespace>  <!-- Add this -->
+      </ros>
+      <robotNamespace>/mobile</robotNamespace>
+      <!-- Add PID gains for velocity control -->
+      <controlPeriod>0.01</controlPeriod>
+      <controlDelay>0</controlDelay>
+      <maxEffort>10</maxEffort>
+    </plugin>
+  </gazebo>
+  
+  
+
+</robot>

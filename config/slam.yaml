@@ -1,0 +1,43 @@
+slam_toolbox:  
+  ros__parameters:  
+    # Required frames  
+    map_frame: "map"  
+    base_frame: "mobile/base_footprint"  
+    odom_frame: "mobile/odom"  
+    map_start_pose: [2.0, 2.0, 0.0]  # Added  
+
+    # Sensor configuration  
+    scan_topic: /mobile/scan  # Fixed to match URDF
+    scan_frame: mobile_lidar_link  # Match URDF
+    publish_map_odom_transform: true  # Enable TF bridge  
+    max_laser_range: 3.5  
+    minimum_laser_range: 0.12  
+
+    # Mapping mode  
+    mode: mapping  
+    resolution: 0.05  
+
+    # Optimization  
+    solver_plugin: solver_plugins::CeresSolver  
+    ceres_linear_solver: SPARSE_NORMAL_CHOLESKY  
+    ceres_preconditioner: SCHUR_JACOBI  
+
+    # Map publishing  
+    publish_map: true
+    publish_map_odom_transform: true  
+    map_publisher: "/map"  
+    map_update_interval: 0.5
+    minimum_travel_distance: 0.1
+    minimum_travel_heading: 0.1  
+
+    # TF settings  
+    transform_publish_period: 0.05  
+    enable_interactive_mode: true  
+
+    # Debugging  
+    debug_logging: false  
+    throttle_scans: 1
+    scan_queue_size: 1000  
+
+    # Map persistence  
+    map_file_name: ""  

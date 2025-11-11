@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>nam_patrol_robot</name>
+  <version>0.1.0</version>
+  <description>Patrolling robot package for autonomous security navigation using ROS 2 and Gazebo</description>
+  <maintainer email="nammy@todo.todo">nammy</maintainer>
+  <license>Apache License 2.0</license>
+
+  <!-- Core dependencies -->
+  <depend>rclpy</depend>
+  <depend>ament_index_python</depend>
+  <depend>launch_ros</depend>
+  <depend>robot_state_publisher</depend>
+  
+  <!-- Simulation dependencies -->
+  <depend>gazebo_ros</depend>
+  <depend>gazebo_ros_pkgs</depend>
+  <depend>gazebo_dev</depend>
+  
+  <!-- Navigation dependencies -->
+  <depend>nav2_bringup</depend>
+  <depend version_gte="1.1.0">nav2_common</depend>
+  <depend version_gte="1.5.0">slam_toolbox</depend>
+  <depend>nav2_behavior_tree</depend>
+  <depend>nav2_amcl</depend>
+  <depend>dwb_core</depend>
+  <depend>nav2_dwb_controller</depend>
+  
+  <!-- Sensor and TF dependencies -->
+  <depend>sensor_msgs</depend>
+  <depend>tf2_ros</depend>
+  
+  <!-- URDF processing -->
+  <depend>xacro</depend>
+  
+  <!-- Visualization -->
+  <depend>rviz2</depend>
+  <depend>lifecycle_msgs</depend>
+  <depend>nav2_msgs</depend>
+  
+  <!-- Python dependencies -->
+  <exec_depend>python3-numpy</exec_depend>
+  <exec_depend>python3-opencv</exec_depend>
+  <exec_depend>nav2_simple_commander</exec_depend>
+  <exec_depend>geometry_msgs</exec_depend>
+
+  <!-- Build dependencies -->
+  <buildtool_depend>ament_python</buildtool_depend>
+  <buildtool_depend>ament_cmake_python</buildtool_depend>
+
+  <!-- Test dependencies -->
+  <test_depend>ament_copyright</test_depend>
+  <test_depend>ament_flake8</test_depend>
+  <test_depend>ament_pep257</test_depend>
+  <test_depend>ament_lint_auto</test_depend>
+  <test_depend>ament_lint_common</test_depend>
+  <test_depend>python3-pytest</test_depend>
+
+  <export>
+    <build_type>ament_python</build_type>
+    <gazebo_ros gazebo_media_path="${prefix}/worlds"/>
+    <gazebo_ros gazebo_model_path="${prefix}/urdf"/>
+    <ros2_urdf model_path="${prefix}/urdf"/>
+    <ros2_sdf model_path="${prefix}/worlds"/>
+  </export>
+</package>

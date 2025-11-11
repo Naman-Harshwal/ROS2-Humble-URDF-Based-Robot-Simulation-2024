@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<root main_tree_to_execute="MainTree">
+  <BehaviorTree ID="MainTree">
+    <PipelineSequence name="NavigatePipeline">
+      <RateController hz="1.0" name="RateControllerComputePathToPose">
+        <PipelineSequence name="ComputePathPipeline">
+          <Fallback name="FallbackComputePathToPose">
+            <ReactiveSequence name="CheckIfNewPathNeeded">
+              <Inverter>
+                <GlobalUpdatedGoal/>
+              </Inverter>
+              <IsPathValid path="{path}"/>
+            </ReactiveSequence>
+            <ComputePathToPose goal="{goal}" path="{path}" planner_id="GridBased"/>
+          </Fallback>
+          <ClearEntireCostmap name="ClearGlobalCostmap-Context" service_name="global_costmap/clear_entirely_global_costmap"/>
+        </PipelineSequence>
+      </RateController>
+      
+      <PipelineSequence name="FollowPathPipeline">
+        <Fallback name="FollowPathFallback">
+          <FollowPath path="{path}" controller_id="FollowPath"/>
+          <ClearEntireCostmap name="ClearLocalCostmap-Context" service_name="local_costmap/clear_entirely_local_costmap"/>
+        </Fallback>
+      </PipelineSequence>
+      
+      <ReactiveFallback name="RecoveryFallback">
+        <GoalUpdated/>
+        <RoundRobin name="RecoveryActions">
+          <Sequence name="ClearingActions">
+            <ClearEntireCostmap name="ClearLocalCostmap-Subtree" service_name="local_costmap/clear_entirely_local_costmap"/>
+            <ClearEntireCostmap name="ClearGlobalCostmap-Subtree" service_name="global_costmap/clear_entirely_global_costmap"/>
+          </Sequence>
+          <Spin name="SpinRecovery" spin_dist="1.57"/>
+          <Wait name="WaitRecovery" wait_duration="5"/>
+          <BackUp name="BackUpRecovery" backup_dist="0.30" backup_speed="0.05"/>
+        </RoundRobin>
+      </ReactiveFallback>
+    </PipelineSequence>
+  </BehaviorTree>
+</root>

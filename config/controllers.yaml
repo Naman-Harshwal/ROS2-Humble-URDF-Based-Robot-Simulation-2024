@@ -1,0 +1,22 @@
+controller_manager:
+  ros__parameters:
+    update_rate: 50  # Hz
+
+joint_state_broadcaster:
+  ros__parameters:
+    type: joint_state_broadcaster/JointStateBroadcaster
+
+mecanum_controller:
+  ros__parameters:
+    type: mecanum_drive_controller/MecanumDriveController
+    front_left_wheel_joint: base_to_wheel1
+    front_right_wheel_joint: base_to_wheel2
+    rear_left_wheel_joint: base_to_wheel3
+    rear_right_wheel_joint: base_to_wheel4
+    wheel_separation_x: 0.25
+    wheel_separation_y: 0.35
+    wheel_radius: 0.05
+    pose_nominals: [0.001, 0.001, 0.001]  # Added for stability
+    odom_frame_id: odom
+    base_frame_id: base_footprint
+    publish_rate: 50.0
